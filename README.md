@@ -19,6 +19,8 @@ This project compares object detection in foggy images using three approaches:
 - **RAW** images  
 - **CLAHE** enhanced images (traditional method)  
 - **AOD-Net** dehazed images (deep learning method)
+
+  
 This project is a proof of deep learning method is better than traditional method
 
 ## ⚙️ Tech Stack
