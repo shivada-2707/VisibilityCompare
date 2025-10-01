@@ -12,6 +12,25 @@ Add screenshots to `static/screenshots/` and reference them in this README.
 # VisibilityCompare
 
 This is my MCA project (RAW, CLAHE, and AOD-Net comparison).
+# Visibility Project (RAW / CLAHE / AOD-Net) using YOLOv5  
+
+## 🔍 About
+This project compares object detection in foggy images using three approaches:
+- **RAW** images  
+- **CLAHE** enhanced images (traditional method)  
+- **AOD-Net** dehazed images (deep learning method)  
+
+## ⚙️ Tech Stack
+- Python, Flask  
+- YOLOv5  
+- OpenCV  
+- PyTorch  
+
+## ▶️ Run Locally
+1. Clone the repo  
+   ```bash
+   git clone https://github.com/shivada-2707/VisibilityCompare.git
+   cd VisibilityCompare
 
 ## Screenshots
 
