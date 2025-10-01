@@ -2,7 +2,7 @@ venv/
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
-.Python
 .DS_Store
+new_runs/
 static/plots/
+*.log
