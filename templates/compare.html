@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title> COMPARISON </title>
+  <style>
+    body { 
+      font-family: Arial, Helvetica, sans-serif; 
+      background:#111; 
+      color:#eee; 
+      margin:0; 
+      padding:20px;
+    }
+    .container { 
+      max-width: 95%; 
+      margin: auto; 
+    }
+    h1 { 
+      text-align:center; 
+      margin-bottom: 18px; 
+    }
+    a { color:#58a6ff; text-decoration:none; }
+    a:hover { text-decoration:underline; }
+
+    /* row for images */
+    .row { 
+      display:flex; 
+      gap:20px; 
+      margin-bottom: 20px;
+    }
+    .box { 
+      flex: 1; 
+      background:#1b1b1b; 
+      padding:15px; 
+      border-radius:10px; 
+      text-align:center; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+      min-height: 320px;
+      display:flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+    }
+    .box h3 { margin-top:0; margin-bottom:10px; }
+    .box img.display { 
+      max-width:100%; 
+      height:auto; 
+      border-radius:6px; 
+      margin-bottom:12px; 
+      box-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    }
+    .small { font-size:0.9rem; color:#bbb; }
+
+    /* charts stacked vertically */
+    .charts {
+      display:flex;
+      flex-direction: column;   /* 👈 stack instead of side by side */
+      gap:20px;
+      margin-top:20px;
+    }
+    .chart {
+      background:#1b1b1b;
+      padding:12px;
+      border-radius:10px;
+      text-align:center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+    }
+    .chart img { 
+      max-width:100%; 
+      height:auto; 
+      display:block; 
+      margin:auto; 
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="{{ url_for('index') }}">← Back to list</a>
+    <h1><center>COMPARISON</center></h1>
+
+    <!-- Images row -->
+    <div class="row">
+      <div class="box">
+        <h3>RAW</h3>
+        {% if raw_url %}
+          <img class="display" src="{{ raw_url }}" alt="raw">
+        {% else %}
+          <div class="small">RAW image not found</div>
+        {% endif %}
+        <p>Detections: <strong>{{ raw_count }}</strong></p>
+        <p>Confidence sum: <strong>{{ '%.3f'|format(raw_conf) }}</strong></p>
+      </div>
+
+      <div class="box">
+        <h3>CLAHE</h3>
+        {% if clahe_url %}
+          <img class="display" src="{{ clahe_url }}" alt="clahe">
+        {% else %}
+          <div class="small">CLAHE image not found</div>
+        {% endif %}
+        <p>Detections: <strong>{{ clahe_count }}</strong></p>
+        <p>Confidence sum: <strong>{{ '%.3f'|format(clahe_conf) }}</strong></p>
+      </div>
+
+      <div class="box">
+        <h3>AOD-Net</h3>
+        {% if aod_url %}
+          <img class="display" src="{{ aod_url }}" alt="aod">
+        {% else %}
+          <div class="small">AOD-Net image not found</div>
+        {% endif %}
+        <p>Detections: <strong>{{ aod_count }}</strong></p>
+        <p>Confidence sum: <strong>{{ '%.3f'|format(aod_conf) }}</strong></p>
+      </div>
+    </div>
+
+    <!-- Charts stacked -->
+    <div class="charts">
+      <div class="chart">
+        <h4>TOTAL DETECTIONS</h4>
+        {% if chart_counts_url %}
+          <img src="{{ chart_counts_url }}" alt="detections chart">
+        {% else %}
+          <div class="small">Counts chart missing</div>
+        {% endif %}
+      </div>
+
+      <div class="chart">
+        <h4>TOTAL CONFIDENCE SCORE</h4>
+        {% if chart_conf_url %}
+          <img src="{{ chart_conf_url }}" alt="confidence chart">
+        {% else %}
+          <div class="small">Confidence chart missing</div>
+        {% endif %}
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>

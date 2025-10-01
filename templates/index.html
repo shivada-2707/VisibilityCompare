@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>VisibilityProject</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #0d1117; /* GitHub dark */
+      color: #c9d1d9;
+    }
+
+    header {
+      padding: 16px;
+      background: #161b22;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 20px;
+      color: #58a6ff;
+    }
+    nav a {
+      margin-left: 16px;
+      text-decoration: none;
+      color: #8b949e;
+      font-size: 14px;
+    }
+    nav a:hover {
+      color: #58a6ff;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    .title {
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 25px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    /* Card layout */
+    .card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #161b22;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.5);
+    }
+
+    /* Left: preview box smaller */
+    .left {
+      flex: 0.6;   /* 👈 makes preview smaller */
+      margin-right: 20px;
+    }
+    .preview-box {
+      border: 1px dashed #30363d;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+      color: #8b949e;
+      min-height: 150px;
+      max-height: 180px;
+    }
+    .preview-box img {
+      max-width: 100%;
+      max-height: 160px;
+      border-radius: 6px;
+    }
+
+    /* Middle: selection */
+    .middle {
+      flex: 1;
+    }
+
+    /* Right: refresh button */
+    .right {
+      flex: 0.4;
+      text-align: right;
+    }
+
+    /* Form controls */
+    select {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #30363d;
+      background: #0d1117;
+      color: #c9d1d9;
+      font-size: 15px;
+      width: 100%;
+      margin-bottom: 12px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #238636;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn:hover { background: #2ea043; }
+    .btn:disabled { background: #444c56; cursor: not-allowed; }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      color: #8b949e;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>VisibilityProject</h1>
+    <nav>
+      <a href="#">Upload</a>
+      <a href="#">Preview</a>
+      <a href="#">Compare</a>
+      <a href="#">Visualize</a>
+      <a href="#">About</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="title">Comparative Analysis of CLAHE & AOD-Net using YOLOv5</div>
+
+    <div class="card">
+      <!-- Left: smaller preview -->
+      <div class="left">
+        <div class="preview-box" id="previewBox">
+          <p>Preview will show RAW image when you select an image</p>
+        </div>
+      </div>
+
+      <!-- Middle: dropdown + compare -->
+      <div class="middle">
+        <label for="stemSelect"><strong>Choose an image</strong></label>
+        <select id="stemSelect">
+          <option value="">-- select --</option>
+          {% for s in stems %}
+            <option value="{{ s }}">{{ s }}</option>
+          {% endfor %}
+        </select>
+        <button id="compareBtn" class="btn" disabled>Compare selected</button>
+      </div>
+
+      <!-- Right: refresh -->
+      <div class="right">
+        <button class="btn" onclick="window.location.reload();">Refresh</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>© 2025 VisibilityProject</footer>
+
+  <script>
+    const selectEl = document.getElementById('stemSelect');
+    const btn = document.getElementById('compareBtn');
+    const previewBox = document.getElementById('previewBox');
+
+    selectEl.addEventListener('change', function() {
+      const v = selectEl.value.trim();
+      btn.disabled = (v === "");
+      if (!btn.disabled) {
+        btn.dataset.target = '/compare/' + encodeURIComponent(v);
+        previewBox.innerHTML = '<img src="/raw_images/' + v + '.png" onerror="this.onerror=null;this.src=\'/raw_images/' + v + '.jpg\'">';
+      } else {
+        previewBox.innerHTML = '<p>Preview will show RAW image when you select an image</p>';
+      }
+    });
+
+    btn.addEventListener('click', function(e){
+      e.preventDefault();
+      if (btn.dataset.target) window.location.href = btn.dataset.target;
+    });
+  </script>
+</body>
+</html>
